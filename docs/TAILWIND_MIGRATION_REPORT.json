@@ -1,0 +1,9 @@
+{
+  "filesScanned": 31,
+  "componentsUpdated": 23,
+  "selectorsMovedIntoTSX": 152,
+  "declarationsMigratedToApply": 1855,
+  "primitivesKeptForKeyframesAndVariables": 44,
+  "cssSourceBytes": 71120,
+  "cssTailwindBytes": 69393
+}

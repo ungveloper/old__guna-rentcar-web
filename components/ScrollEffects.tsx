@@ -52,5 +52,5 @@ export function ScrollEffects() {
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
-  return <div className="reading-progress" aria-hidden="true" />;
+  return <div className="reading-progress fixed [top:0] [left:0] w-full [height:3px] [background:var(--kinetic-lime)] [z-index:150] [transform:scaleX(0)] [transform-origin:left_center] [pointer-events:none]" aria-hidden="true" />;
 }
