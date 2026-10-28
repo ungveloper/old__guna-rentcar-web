@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Analytics } from "@/components/Analytics";
+import { Analytics } from "@/app/_components/common/Analytics";
 import { getSiteUrl } from "@/lib/seo";
 import { site } from "@/data/site";
 import "./globals.css";

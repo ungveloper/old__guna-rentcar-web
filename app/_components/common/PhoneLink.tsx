@@ -2,7 +2,7 @@
 
 import type { AnchorHTMLAttributes, MouseEvent } from "react";
 import { site } from "@/data/site";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/app/_components/common/Icon";
 
 declare global {
   interface Window {

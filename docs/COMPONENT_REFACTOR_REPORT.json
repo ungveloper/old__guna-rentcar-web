@@ -1,0 +1,132 @@
+{
+  "movedComponents": [
+    {
+      "from": "components/Analytics.tsx",
+      "to": "app/_components/common/Analytics.tsx"
+    },
+    {
+      "from": "components/Brand.tsx",
+      "to": "app/_components/common/Brand.tsx"
+    },
+    {
+      "from": "components/DetailHero.tsx",
+      "to": "app/_components/common/DetailHero.tsx"
+    },
+    {
+      "from": "components/DrivePicker.tsx",
+      "to": "app/_components/home/DrivePicker.tsx"
+    },
+    {
+      "from": "components/FAQ.tsx",
+      "to": "app/_components/guide/FAQ.tsx"
+    },
+    {
+      "from": "components/Fleet.tsx",
+      "to": "app/_components/cars/Fleet.tsx"
+    },
+    {
+      "from": "components/FleetPreview.tsx",
+      "to": "app/_components/home/FleetPreview.tsx"
+    },
+    {
+      "from": "components/Header.tsx",
+      "to": "app/_components/common/Header.tsx"
+    },
+    {
+      "from": "components/HeroStage.tsx",
+      "to": "app/_components/home/HeroStage.tsx"
+    },
+    {
+      "from": "components/Icon.tsx",
+      "to": "app/_components/common/Icon.tsx"
+    },
+    {
+      "from": "components/InnerPageShell.tsx",
+      "to": "app/_components/common/InnerPageShell.tsx"
+    },
+    {
+      "from": "components/MobileCallBar.tsx",
+      "to": "app/_components/common/MobileCallBar.tsx"
+    },
+    {
+      "from": "components/PhoneLink.tsx",
+      "to": "app/_components/common/PhoneLink.tsx"
+    },
+    {
+      "from": "components/PromotionCarousel.tsx",
+      "to": "app/_components/events/PromotionCarousel.tsx"
+    },
+    {
+      "from": "components/Reviews.tsx",
+      "to": "app/_components/home/Reviews.tsx"
+    },
+    {
+      "from": "components/ScrollEffects.tsx",
+      "to": "app/_components/home/ScrollEffects.tsx"
+    },
+    {
+      "from": "components/ScrollStory.tsx",
+      "to": "app/_components/home/ScrollStory.tsx"
+    },
+    {
+      "from": "components/ServiceDetailsPage.tsx",
+      "to": "app/_components/services/ServiceDetailsPage.tsx"
+    },
+    {
+      "from": "components/ShortTermRates.tsx",
+      "to": "app/_components/cars/ShortTermRates.tsx"
+    },
+    {
+      "from": "components/SiteFooter.tsx",
+      "to": "app/_components/common/SiteFooter.tsx"
+    }
+  ],
+  "thinPages": [
+    {
+      "route": "app/page.tsx",
+      "content": "app/_components/home/home-page.tsx",
+      "metadataPreserved": false
+    },
+    {
+      "route": "app/cars/page.tsx",
+      "content": "app/_components/cars/cars-page.tsx",
+      "metadataPreserved": true
+    },
+    {
+      "route": "app/guide/page.tsx",
+      "content": "app/_components/guide/guide-page.tsx",
+      "metadataPreserved": true
+    },
+    {
+      "route": "app/contact/page.tsx",
+      "content": "app/_components/contact/contact-page.tsx",
+      "metadataPreserved": true
+    },
+    {
+      "route": "app/events/page.tsx",
+      "content": "app/_components/events/events-page.tsx",
+      "metadataPreserved": true
+    },
+    {
+      "route": "app/services/page.tsx",
+      "content": "app/_components/services/services-page.tsx",
+      "metadataPreserved": true
+    }
+  ],
+  "extractedSections": [
+    "app/_components/home/_sections/introduction.tsx",
+    "app/_components/home/_sections/services.tsx",
+    "app/_components/home/_sections/why-guna.tsx",
+    "app/_components/home/_sections/rental-process.tsx",
+    "app/_components/home/_sections/related-links.tsx",
+    "app/_components/home/_sections/contact-cta.tsx"
+  ],
+  "sharedTokens": [
+    "semantic colors",
+    "mobile typography",
+    "desktop typography",
+    "existing keyframes"
+  ],
+  "jsxParseErrors": [],
+  "staticClassNamesNormalized": 276
+}

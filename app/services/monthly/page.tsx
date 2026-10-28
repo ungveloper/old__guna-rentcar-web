@@ -1,4 +1,4 @@
-import { ServiceDetailsPage } from "@/components/ServiceDetailsPage";
+import { ServiceDetailsPage } from "@/app/_components/services/ServiceDetailsPage";
 import { serviceMetadata } from "@/lib/service-seo";
 
 export const metadata = serviceMetadata("monthly");
