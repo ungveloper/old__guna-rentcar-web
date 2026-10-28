@@ -1,0 +1,35 @@
+{
+  "created": [
+    "app/_components/cars/VehicleDetail.tsx",
+    "app/_components/cars/VehicleFilters.tsx",
+    "app/_components/cars/VehicleRateTable.tsx",
+    "app/_components/common/Breadcrumb.tsx",
+    "app/_components/common/Container.tsx",
+    "app/_components/common/InquiryProvider.tsx",
+    "app/_components/common/PageTabs.tsx",
+    "app/_components/common/SectionHeading.tsx",
+    "app/_components/common/SiteActions.tsx",
+    "app/api/inquiries/route.ts",
+    "app/cars/[id]/page.tsx",
+    "docs/NOTION_INQUIRIES_SETUP.md",
+    "docs/PHASE1_TO_4_REFACTOR.md",
+    "playwright.config.ts",
+    "tests/e2e/site.spec.ts",
+    "tests/e2e/visual.spec.ts"
+  ],
+  "updated": [
+    "app/_components/common/MobileCallBar.tsx",
+    "app/layout.tsx",
+    "app/_components/common/InnerPageShell.tsx",
+    "app/_components/home/_sections/contact-cta.tsx",
+    "app/_components/cars/Fleet.tsx",
+    "app/_components/cars/cars-page.tsx",
+    "app/_components/services/services-page.tsx",
+    "app/sitemap.ts"
+  ],
+  "tasks": [],
+  "reused": [],
+  "preserved": [
+    ".env.example.inquiries"
+  ]
+}

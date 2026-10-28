@@ -1,8 +1,10 @@
+import { vehicles } from "@/data/vehicles";
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/seo";
 
 const pages = [
   { path: "/", priority: 1, frequency: "weekly" },
+  ...vehicles.map(vehicle => ({ path: `/cars/${vehicle.id}`, priority: 0.7, frequency: "monthly" as const })),
   { path: "/cars", priority: 0.95, frequency: "weekly" },
   { path: "/services", priority: 0.85, frequency: "monthly" },
   { path: "/services/short-term", priority: 0.9, frequency: "monthly" },

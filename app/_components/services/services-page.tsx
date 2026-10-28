@@ -1,3 +1,4 @@
+import { PageTabs } from "@/app/_components/common/PageTabs";
 
 import Link from "next/link";
 import { DetailHero } from "@/app/_components/common/DetailHero";
@@ -23,7 +24,7 @@ export default function ServicesPage() {
       })) },
     ],
   };
-  return <InnerPageShell>
+  return <InnerPageShell><PageTabs active="/services" tabs={[{label:"서비스 전체",href:"/services"},{label:"단기렌트",href:"/services/short-term"},{label:"월렌트",href:"/services/monthly"},{label:"장기렌트",href:"/services/long-term"},{label:"사고대차",href:"/services/accident"}]} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: escapeJson(jsonLd) }} />
     <DetailHero eyebrow="RENTAL SERVICES / BUSAN" title="필요한 기간과 목적에 맞게," accent="렌트 서비스를 비교하세요." description="단기·월·장기렌트 및 보험사고대차의 특징과 상담 전 확인할 사항을 확인하세요." image="/images/vehicles/gv80.webp" imageAlt="건아렌트카 서비스 소개용 제네시스 GV80 사진" detailLabel="렌트 서비스" />
     <section className="detail-section [padding:116px_0_126px] [background:white] [@media(max-width:750px)]:[padding:76px_0]" id="details"><div className="container [max-width:1360px] [width:calc(100%_-_96px)] [margin-inline:auto] [@media(max-width:1180px)]:[width:calc(100%_-_64px)] [@media(max-width:900px)]:[width:calc(100%_-_48px)] [@media(max-width:600px)]:[width:calc(100%_-_36px)]"><div className={"detail-heading [max-width:920px] [margin-bottom:47px] [&_h2]:text-[clamp(37px,4.7vw,68px)] [&_h2]:[line-height:1.2] [&_h2]:[letter-spacing:-.065em] [&_h2]:[margin:18px_0_14px] [&_h2]:font-[780] [&_h2]:[word-break:keep-all] [&>p]:text-base [&>p]:[line-height:1.85] [&>p]:text-[#717680] [&>p]:max-w-[760px] [&>p]:[word-break:keep-all] [@media(max-width:750px)]:mb-8 [@media(max-width:750px)]:[&>p]:text-sm [@media(max-width:480px)]:[&_h2]:text-[36px]"}><span className="micro-label inline-flex items-center [gap:10px] [font-size:11px] font-extrabold [letter-spacing:.2em] [color:var(--gold-dark)] [@media(max-width:600px)]:text-[10px] [@media(max-width:600px)]:[letter-spacing:.15em]">FOUR RENTAL SERVICES</span><h2>건아렌트카 렌트 서비스</h2><p>차량이 필요한 상황과 기간에 맞춰 서비스를 선택하세요. 실제 계약 요금·대여 가능 여부는 전화 상담으로 확인합니다.</p></div><div className="service-seo__hub-grid grid [grid-template-columns:repeat(2,minmax(0,1fr))] [gap:18px] [@media(max-width:760px)]:[grid-template-columns:1fr]">{serviceOrder.map((key, index) => {

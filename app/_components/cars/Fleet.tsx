@@ -2,8 +2,10 @@
 
 import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { VehicleFilters, type VehicleSort } from "@/app/_components/cars/VehicleFilters";
+import { SiteActions } from "@/app/_components/common/SiteActions";
 import { categoryOptions, vehicles } from "@/data/vehicles";
-import { PhoneLink } from "@/app/_components/common/PhoneLink";
 import { Icon } from "@/app/_components/common/Icon";
 import type { Vehicle, VehicleCategory } from "@/types/content";
 
@@ -25,6 +27,7 @@ function VehicleCard({ vehicle, index, onOpen }: { vehicle: Vehicle; index: numb
     </button>
     <div className="fleet-card__content flex justify-between [align-items:end] gap-3 [padding:23px_2px_15px] [@media(max-width:1180px)]:block [@media(max-width:600px)]:flex"><div><span className="fleet-card__brand [font-size:11px] [font-weight:730] [color:#898b91] [letter-spacing:.06em]">{vehicle.brand} {vehicle.seats ? `· ${vehicle.seats}` : ""}</span><h3>{vehicle.model}</h3></div><div className={"fleet-card__price text-right [flex-shrink:0] [&_span]:block [&_span]:text-[10px] [&_span]:text-[#8b8e93] [&_span]:mb-[5px] [&_strong]:text-[19px] [&_strong]:[letter-spacing:-.05em] [&_strong]:font-[770] [@media(max-width:1180px)]:text-left [@media(max-width:1180px)]:mt-[13px] [@media(max-width:1180px)]:[&_span]:[display:inline] [@media(max-width:1180px)]:[&_span]:mr-[9px] [@media(max-width:1180px)]:[&_strong]:text-[17px] [@media(max-width:600px)]:text-right [@media(max-width:600px)]:m-0 [@media(max-width:600px)]:[&_span]:block [@media(max-width:600px)]:[&_span]:[margin:0_0_5px]"}><span>1~2일 대여 · 1일</span><strong>{formatPrice(vehicle.rates.days1to2)}</strong></div></div>
     <button className={"fleet-card__details [background:none] border-0 [border-top:1px_solid_var(--line)] flex justify-between items-center [padding:14px_2px] w-full text-xs font-[740] text-[#62666d] [transition:color_.2s] [&:hover]:text-[#111]"} onClick={() => onOpen(vehicle)} type="button">전체 대여 요금 보기 <Icon name="arrowRight" size={17}/></button>
+    <Link href={`/cars/${vehicle.id}`} className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-gold-dark underline underline-offset-4 hover:text-ink">{vehicle.model} 상세 페이지 보기 →</Link>
   </article>;
 }
 
@@ -32,7 +35,17 @@ export function Fleet() {
   const [active, setActive] = useState<"all" | VehicleCategory>("all");
   const [selected, setSelected] = useState<Vehicle | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const filtered = useMemo(() => vehicles.filter(v => active === "all" || v.category === active), [active]);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<VehicleSort>("default");
+  const filtered = useMemo(() => {
+    const term = search.trim().toLocaleLowerCase("ko-KR");
+    const found = vehicles.filter(vehicle => (active === "all" || vehicle.category === active) &&
+      (!term || `${vehicle.brand} ${vehicle.model}`.toLocaleLowerCase("ko-KR").includes(term)));
+    if (sort === "price-low") found.sort((a, b) => a.rates.days1to2 - b.rates.days1to2);
+    if (sort === "price-high") found.sort((a, b) => b.rates.days1to2 - a.rates.days1to2);
+    if (sort === "name") found.sort((a, b) => a.model.localeCompare(b.model, "ko-KR"));
+    return found;
+  }, [active, search, sort]);
 
   function open(vehicle: Vehicle) { setSelected(vehicle); dialogRef.current?.showModal(); }
   function close() { dialogRef.current?.close(); setSelected(null); }
@@ -40,6 +53,7 @@ export function Fleet() {
   return <section className={"fleet-section section-pad [padding:148px_0] bg-paper [@media(max-width:900px)]:[padding:105px_0] [@media(max-width:600px)]:[padding:85px_0] [&_.section-intro_h2]:text-[clamp(54px,6.4vw,94px)] [&_.section-intro_h2]:font-[820] [&_.section-intro_h2]:[letter-spacing:-.08em]"} id="fleet" aria-labelledby="fleet-title">
     <div className="container [max-width:1360px] [width:calc(100%_-_96px)] [margin-inline:auto] [@media(max-width:1180px)]:[width:calc(100%_-_64px)] [@media(max-width:900px)]:[width:calc(100%_-_48px)] [@media(max-width:600px)]:[width:calc(100%_-_36px)]">
       <div className={"section-intro [max-width:840px] [margin:0_auto_72px] text-center [&_h2]:text-[clamp(44px,5.4vw,80px)] [&_h2]:font-[760] [&_h2]:[line-height:1.14] [&_h2]:[letter-spacing:-.065em] [&_h2]:[margin:25px_0_24px] [&_h2_span]:text-[#9a9da4] [&_h2_span]:[font-style:normal] [&_p]:text-[17px] [&_p]:[color:var(--muted)] [&_p]:max-w-[600px] [&_p]:[margin-inline:auto] [&_p]:[word-break:keep-all] [@media(max-width:600px)]:mb-12 [@media(max-width:600px)]:text-left [@media(max-width:600px)]:[&_h2]:text-[clamp(41px,10.5vw,62px)] [@media(max-width:600px)]:[&_h2]:[margin:20px_0] [@media(max-width:600px)]:[&_p]:text-[15px]"}><span className="micro-label inline-flex items-center [gap:10px] [font-size:11px] font-extrabold [letter-spacing:.2em] [color:var(--gold-dark)] [@media(max-width:600px)]:text-[10px] [@media(max-width:600px)]:[letter-spacing:.15em]">OUR COLLECTION / VEHICLES</span><h2 id="fleet-title">보유 차종과 대여 요금,<br/><span>한눈에 확인하세요.</span></h2><p>경차부터 SUV·승합차까지 {vehicles.length}개 차량 항목의 기준 요금을 비교하세요. 차량을 선택하면 시간별·기간별 상세 요금을 확인할 수 있습니다.</p></div>
+      <VehicleFilters search={search} onSearch={setSearch} sort={sort} onSort={setSort} count={filtered.length} />
       <div className="fleet-toolbar flex justify-between items-center gap-[18px] mb-[34px] [border-bottom:1px_solid_var(--line)] pb-[17px] [@media(max-width:600px)]:block [@media(max-width:600px)]:mb-6"><div className={"fleet-filters flex [gap:6px] [flex-wrap:wrap] [&_button]:border-0 [&_button]:bg-transparent [&_button]:[padding:12px_20px] [&_button]:rounded-[60px] [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#64666e] [&_button]:[transition:background_.2s,color_.2s] [&_button:hover]:bg-[#f3f3f5] [&_button.is-active]:bg-[#1c1e23] [&_button.is-active]:text-paper [@media(max-width:600px)]:overflow-x-auto [@media(max-width:600px)]:[flex-wrap:nowrap] [@media(max-width:600px)]:pb-2 [@media(max-width:600px)]:[scrollbar-width:none] [@media(max-width:600px)]:[&_button]:[flex-shrink:0] [@media(max-width:600px)]:[&_button]:[padding:10px_16px] [@media(max-width:600px)]:[&_button]:text-xs [&_button.is-active]:bg-[#0c1116]"} role="group" aria-label="차종별 차량 필터">{categoryOptions.map(opt => <button key={opt.value} type="button" className={active === opt.value ? "is-active" : ""} aria-pressed={active === opt.value} onClick={()=>setActive(opt.value)}>{opt.label}</button>)}</div><span className="fleet-count [white-space:nowrap] [font-size:11px] [letter-spacing:.1em] [font-weight:750] [color:#8b8e95] [@media(max-width:600px)]:block [@media(max-width:600px)]:[margin:12px_0_0]">{String(filtered.length).padStart(2,"0")} MODELS</span></div>
       <div className="fleet-grid grid [grid-template-columns:repeat(3,minmax(0,1fr))] [gap:54px_22px] [@media(max-width:900px)]:[grid-template-columns:repeat(2,minmax(0,1fr))] [@media(max-width:600px)]:[grid-template-columns:1fr] [@media(max-width:600px)]:gap-[33px]" aria-live="polite">{filtered.map((v,i)=><VehicleCard key={v.id} vehicle={v} index={i} onOpen={open}/>)}</div>
       <p className="fleet-disclaimer [font-size:12px] [color:#85878d] [margin-top:40px] [max-width:920px] [word-break:keep-all] [@media(max-width:600px)]:text-[11px]">※ 사진은 차종 안내용 이미지로, 실제 대여 차량의 색상·연식·트림과 다를 수 있습니다. 표시 금액은 제공받은 요금표 기준이며 차량 이용 가능 여부, 보험 및 세부 적용 조건은 전화로 확인해 주세요.</p>
@@ -50,7 +64,7 @@ export function Fleet() {
         <div className={"rate-dialog__info [padding:53px_45px_42px] [&_h3]:text-[43px] [&_h3]:[line-height:1.13] [&_h3]:[margin:17px_0] [&>p]:text-sm [&>p]:text-[#80838a] [&>p]:mb-[22px] [&>.pill]:w-full [&>.pill]:mt-[10px] [&>small]:block [&>small]:text-[11px] [&>small]:[line-height:1.7] [&>small]:text-[#8b8e95] [&>small]:mt-4 [@media(max-width:600px)]:[padding:28px_25px] [@media(max-width:600px)]:[&_h3]:text-[32px] [@media(max-width:600px)]:[padding:24px_24px_28px] [@media(max-width:600px)]:[&_h3]:text-[clamp(26px,7vw,34px)] [@media(max-width:600px)]:[&_h3]:[margin:12px_0] [@media(max-width:600px)]:[&>p]:mb-[13px]"}><span className="micro-label inline-flex items-center [gap:10px] [font-size:11px] font-extrabold [letter-spacing:.2em] [color:var(--gold-dark)] [@media(max-width:600px)]:text-[10px] [@media(max-width:600px)]:[letter-spacing:.15em]">FULL RATE GUIDE</span><h3>{selected.model}</h3><p>이용 기간별로 달라지는 기준 대여 요금을 확인해 보세요.</p>
           <div className={"rate-group [margin:22px_0] [border-top:1px_solid_#dfe0e3] [&_h4]:text-[13px] [&_h4]:font-extrabold [&_h4]:[margin:15px_0_12px] [@media(max-width:600px)]:[margin:15px_0] [@media(max-width:600px)]:[margin:11px_0] [@media(max-width:600px)]:[&_h4]:[margin:12px_0_9px]"}><h4>시간별 대여 요금</h4><Rate label="6시간" price={selected.rates.hours6}/><Rate label="12시간" price={selected.rates.hours12}/></div>
           <div className={"rate-group [margin:22px_0] [border-top:1px_solid_#dfe0e3] [&_h4]:text-[13px] [&_h4]:font-extrabold [&_h4]:[margin:15px_0_12px] [@media(max-width:600px)]:[margin:15px_0] [@media(max-width:600px)]:[margin:11px_0] [@media(max-width:600px)]:[&_h4]:[margin:12px_0_9px]"}><h4>대여기간별 1일 요금</h4><Rate label="1~2일" price={selected.rates.days1to2} daily/><Rate label="3~6일" price={selected.rates.days3to6} daily/><Rate label="7일 이상" price={selected.rates.days7plus} daily/></div>
-          <PhoneLink placement="vehicle_modal" vehicleId={selected.id} className={"pill pill--dark [background:#1b1d22] text-paper inline-flex items-center justify-center gap-[14px] min-h-[50px] [padding:14px_24px] rounded-[100px] text-sm font-[750] [white-space:nowrap] [border:1px_solid_transparent] [transition:transform_.25s_ease,background_.25s_ease,color_.25s_ease] [&:hover]:[transform:translateY(-3px)] [&:hover]:bg-[#363942] [@media(prefers-reduced-motion:reduce)]:[transition:none]"}><Icon name="phone" size={17}/> 이 차량 전화 문의 <Icon name="arrowRight" size={17}/></PhoneLink>
+          <div className="space-y-3"><SiteActions vehicleId={selected.id} service="cars" /><Link href={`/cars/${selected.id}`} onClick={close} className="block text-center text-sm font-semibold text-gold-dark underline underline-offset-4 hover:text-ink">{selected.model} 상세 페이지 보기 →</Link></div>
           <small>차량 이미지와 실제 대여 차량의 사양은 다를 수 있습니다. 보험·면책·인수 조건 및 최종 요금은 전화로 확인해 주세요.</small>
         </div>
       </div>}
